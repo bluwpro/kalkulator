@@ -1,23 +1,29 @@
-const displayOutput = document.querySelector('.display');
-const buttons = document.querySelectorAll('button');
-const specialOperators = ['%', '=', '+', '-', '/', '*'];
-let output = '';
+const displayOutput = document.querySelector('.display')
+const buttons = document.querySelectorAll('button')
+const specialOperators = ['%','=','+','-','/','*']
+let output = ''
 
 const calculate = (btnValue) => {
   if (btnValue === '=' && output !== '') {
-    output = eval(output.replace('%', '/100')).toString();
+    try {
+      output = eval(output.replace('%', '/100')).toString()
+    } catch {
+      output = 'Error'
+    }
   } else if (btnValue === 'AC') {
-    output = '';
+    output = ''
   } else if (btnValue === 'DEL') {
-    output = output.toString().slice(0, -1);
+    output = output.toString().slice(0, -1)
   } else {
-    if (output === '' && specialOperators.includes(btnValue)) return;
-    output += btnValue;
+    if (output === '' && specialOperators.includes(btnValue)) return
+    output += btnValue
   }
-  
-  displayOutput.value = output;
-};
+
+  displayOutput.value = output
+}
 
 buttons.forEach(button => {
-  button.addEventListener('click', (e) => calculate(e.target.dataset.value));
-});
+  button.addEventListener('click', (e) => {
+    calculate(e.currentTarget.getAttribute('data_value'))
+  })
+})
